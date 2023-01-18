@@ -86,7 +86,6 @@ CREATE TABLE products (
 	brand VARCHAR (50) NOT NULL,
 	category_id bigserial NOT NULL REFERENCES categories ON DELETE SET NULL,
 	sub_category_id bigserial REFERENCES sub_categories ON DELETE SET NULL,
-	discount_id bigserial REFERENCES discounts ON DELETE SET NULL,
 	price money NOT NULL,
 	created_at timestamp with time zone NOT NULL DEFAULT NOW(),
 	updated_at timestamp with time zone NOT NULL DEFAULT NOW()
@@ -99,6 +98,7 @@ CREATE TABLE variants (
 	product_id bigserial NOT NULL REFERENCES products ON DELETE CASCADE,
 	size VARCHAR (50),
 	color VARCHAR (50),
+	discount_id bigserial REFERENCES discounts ON DELETE SET NULL,
 	fit VARCHAR (50),
 	stock numeric NOT NULL,
     covers_warranty boolean NOT NULL DEFAULT false,
@@ -112,6 +112,7 @@ CREATE TABLE variants (
 CREATE TABLE addresses (
 	address_id bigserial NOT NULL PRIMARY KEY,
 	user_id bigserial NOT NULL REFERENCES users ON DELETE CASCADE,
+	name VARCHAR(50) NOT NULL DEFAULT 'Home',
 	address_line_1 text NOT NULL,
 	address_line_2 text,
 	city VARCHAR(50) NOT NULL,

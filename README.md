@@ -132,46 +132,35 @@
 
   It gets deleted when the cart is deleted. (CASCADE ON DELETE)
 
-### 11. Wishlist
-
-- wishlist_id `(Primary Key, Auto Increment)`
-- user_id `(Foreign Key, References user_id in customers table)`
-- created_at `(Timestamp)`
-- updated_at `(Timestamp)`
-
-  A user can have only one wishlist.
-
-  It gets deleted when the user is deleted. (CASCADE ON DELETE)
-
-### 12. Wishlist Items
+### 11. Wishlist Items
 
 - wishlist_item_id `(Primary Key, Auto Increment)`
-- wishlist_id `(Foreign Key, References wishlist_id in wishlist table)`
+- user_id `(Foreign Key, References user_id in customers table)`
 - variant_id `(Foreign Key, References variant_id in variants table)`
 - created_at `(Timestamp)`
 
   It gets deleted when the wishlist is deleted. (CASCADE ON DELETE)
 
-### 13. Orders
+### 12. Orders
 
 - order_id `(Primary Key, Auto Increment)`
-- user_id `(Foreign Key, References user_id in customers table)`
 - address_id `(Foreign Key, References address_id in addresses table)`
 - status `(Pending, Shipped, Delivered, Cancelled)`
+- total_price
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
-### 14. Order Items
+### 13. Order Items
 
 - order_item_id `(Primary Key, Auto Increment)`
 - order_id `(Foreign Key, References order_id in orders table)`
 - variant_id `(Foreign Key, References variant_id in variants table)`
 - quantity
-- total_price
+- price
 
   It gets deleted when the order is deleted. (CASCADE ON DELETE)
 
-### 15. Payments
+### 14. Payments
 
 - payment_id `(Primary Key, Auto Increment)`
 - order_id `(Foreign Key, References order_id in orders table)`
@@ -180,7 +169,7 @@
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
-### 16. Refunds
+### 15. Refunds
 
 - refund_id `(Primary Key, Auto Increment)`
 - order_id `(Foreign Key, References order_id in orders table)`

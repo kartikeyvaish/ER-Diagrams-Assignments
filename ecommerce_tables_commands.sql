@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS
 	variants,
 	carts,
 	cart_items,
-	wishlists,
 	wishlist_items,
 	orders,
 	discounts,
@@ -144,18 +143,9 @@ CREATE TABLE cart_items (
 
 -------------------------------------------------------------
 
-CREATE TABLE wishlists (
-	wishlist_id bigserial NOT NULL PRIMARY KEY,
-	user_id bigserial NOT NULL REFERENCES users ON DELETE CASCADE,
-	created_at timestamp with time zone NOT NULL DEFAULT NOW(),
-	updated_at timestamp with time zone NOT NULL DEFAULT NOW()
-);
-
--------------------------------------------------------------
-
 CREATE TABLE wishlist_items (
 	wishlist_item_id bigserial NOT NULL PRIMARY KEY,
-	wishlist_id bigserial NOT NULL REFERENCES wishlists ON DELETE CASCADE,
+	user_id bigserial NOT NULL REFERENCES users ON DELETE CASCADE,
 	variant_id bigserial NOT NULL REFERENCES variants ON DELETE CASCADE,
 	created_at timestamp with time zone NOT NULL DEFAULT NOW()
 );
@@ -166,6 +156,7 @@ CREATE TABLE orders (
 	order_id bigserial NOT NULL PRIMARY KEY,
 	address_id bigserial NOT NULL REFERENCES addresses ON DELETE SET NULL,
 	status VARCHAR(50) NOT NULL,
+	total_price money NOT NULL,
 	created_at timestamp with time zone NOT NULL DEFAULT NOW(),
 	updated_at timestamp with time zone NOT NULL DEFAULT NOW()
 );
@@ -177,7 +168,7 @@ CREATE TABLE order_items (
 	order_id bigserial NOT NULL REFERENCES orders ON DELETE CASCADE,
 	variant_id bigserial NOT NULL REFERENCES variants ON DELETE CASCADE,
     quantity numeric NOT NULL,
-	total_price money NOT NULL
+	price money NOT NULL
 );
 
 -------------------------------------------------------------

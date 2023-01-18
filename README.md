@@ -31,6 +31,9 @@
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
+  There can be many categories and each category can have many sub categories.
+  For Example: Laptops can be a category and sub categories can be Gaming Laptops, Business Laptops, etc.
+
 ### 4. Sub Categories
 
 - sub_category_id `(Primary Key, Auto Increment)`
@@ -38,6 +41,8 @@
 - name
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
+
+  It gets deleted when the parent category is deleted. (CASCADE ON DELETE)
 
 ### 5. Discounts
 
@@ -52,6 +57,9 @@
 - updated_at `(Timestamp)`
 - is_active `(Boolean)`
 
+  Discounts can be applied to variants of products.
+  For example: If a product has 3 variants, then the discount can be applied to all 3 variants or to a specific variant.
+
 ### 6. Products
 
 - product_id `(Primary Key, Auto Increment)`
@@ -59,7 +67,6 @@
 - brand
 - category_id `(Foreign Key, References category_id in categories table)`
 - sub_category_id `(Foreign Key, References sub_category_id in sub_categories table)`
-- discount_id `(Foreign Key, References discount_id in discounts table)`
 - description
 - price
 - image
@@ -70,6 +77,7 @@
 
 - variant_id `(Primary Key, Auto Increment)`
 - product_id `(Foreign Key, References product_id in products table)`
+- discount_id `(Foreign Key, References discount_id in discounts table)`
 - size
 - color
 - fit
@@ -79,10 +87,16 @@
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
+  Variants are the different sizes, colors, fits, etc of a product.
+  For example: A T-Shirt can have different sizes, colors, fits, etc. So, each of these different sizes, colors, fits, etc are variants of the product.
+
+  It gets deleted when the product is deleted. (CASCADE ON DELETE)
+
 ### 8. Addresses
 
 - address_id `(Primary Key, Auto Increment)`
 - user_id `(Foreign Key, References user_id in customers table)`
+- name
 - address_line_1
 - address_line_2
 - city
@@ -92,12 +106,21 @@
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
+  A user can have multiple address.
+  For example: A user can have a home address and a work address.
+
+  It gets deleted when the user is deleted. (CASCADE ON DELETE)
+
 ### 9. Cart
 
 - cart_id `(Primary Key, Auto Increment)`
 - user_id `(Foreign Key, References user_id in customers table)`
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
+
+  A user can have only one cart.
+
+  It gets deleted when the user is deleted. (CASCADE ON DELETE)
 
 ### 10. Cart Items
 
@@ -107,6 +130,8 @@
 - quantity
 - created_at `(Timestamp)`
 
+  It gets deleted when the cart is deleted. (CASCADE ON DELETE)
+
 ### 11. Wishlist
 
 - wishlist_id `(Primary Key, Auto Increment)`
@@ -114,12 +139,18 @@
 - created_at `(Timestamp)`
 - updated_at `(Timestamp)`
 
+  A user can have only one wishlist.
+
+  It gets deleted when the user is deleted. (CASCADE ON DELETE)
+
 ### 12. Wishlist Items
 
 - wishlist_item_id `(Primary Key, Auto Increment)`
 - wishlist_id `(Foreign Key, References wishlist_id in wishlist table)`
 - variant_id `(Foreign Key, References variant_id in variants table)`
 - created_at `(Timestamp)`
+
+  It gets deleted when the wishlist is deleted. (CASCADE ON DELETE)
 
 ### 13. Orders
 
@@ -137,6 +168,8 @@
 - variant_id `(Foreign Key, References variant_id in variants table)`
 - quantity
 - total_price
+
+  It gets deleted when the order is deleted. (CASCADE ON DELETE)
 
 ### 15. Payments
 
